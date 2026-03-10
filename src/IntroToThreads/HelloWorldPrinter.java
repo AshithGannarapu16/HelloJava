@@ -1,20 +1,31 @@
 package IntroToThreads;
 
 public class HelloWorldPrinter implements Runnable {
+    //Thread class accepts a Runnable type of object
+    //It will contain run()
+    //Thread will call this run()
+
 
     @Override
     public void run() {
-        System.out.println("Hello World");
-        print();
-        print();
+        //whatever you do inside this it will do this executed
+
 
         print();
+//      print();
+
+
+
+
     }
 
     public void print(){
-        System.out.println("Hello World from "+Thread.currentThread().getName());
+        System.out.println("Hello World From  "+Thread.currentThread().getName());
+
+
     }
 }
 
-//Runnable which has a run method
-//run();
+
+//runnable has created Interface run method
+
