@@ -33,7 +33,7 @@ public class Client {
 //obj of Client class-> Main or class.main
 //Task:print a hello world not in the main thread
 
-//cpu can pick any thread that's why their's no sequence threads will run randomly it won't be sequential
+//cpu can pick any thread that's why no sequence threads will run randomly it won't be sequential
 
 
 
