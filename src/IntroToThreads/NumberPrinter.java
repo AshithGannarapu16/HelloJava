@@ -5,6 +5,7 @@ public class NumberPrinter implements Runnable {
     @Override
     public void run() {
         print();
+        print();
     }
 
     public void print() {
