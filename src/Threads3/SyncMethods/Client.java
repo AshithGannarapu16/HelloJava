@@ -25,6 +25,7 @@ public class Client {
         res1.get();
 
         System.out.println(count.value);
+        System.out.println(adder.count);
 
 
     }
