@@ -1,0 +1,76 @@
+ackage com.assignment.question;
+
+import com.assignment.question.decoder.AudioDecoder;
+import com.assignment.question.player.AudioPlayer;
+import com.assignment.question.processor.AudioProcessor;
+
+// Abstract factory class for creating different parts of an audio system
+public abstract class AudioFactory {
+    // Abstract method for getting the format of audio the factory supports
+    public abstract MediaFormat supportsFormat();
+
+    // Abstract methods for creating different parts of an audio system
+    public abstract AudioPlayer createAudioPlayer(int volume, double playbackRate);
+    public abstract AudioDecoder createAudioDecoder(byte[] audioData);
+    public abstract AudioProcessor createAudioProcessor(byte[] audioData);
+}
+
+package com.assignment.question;
+
+import com.assignment.question.decoder.AudioDecoder;
+import com.assignment.question.decoder.FLACDecoder;
+import com.assignment.question.player.AudioPlayer;
+import com.assignment.question.player.FLACPlayer;
+import com.assignment.question.processor.AudioProcessor;
+import com.assignment.question.processor.FLACAudioProcessor;
+
+// Concrete factory class for creating FLAC audio systems
+public class FLACAudioFactory extends AudioFactory {
+    // Methods for creating different parts of a FLAC audio system
+    public AudioPlayer createAudioPlayer(int volume, double playbackRate) {
+        return new FLACPlayer(volume, playbackRate);
+    }
+
+    public AudioDecoder createAudioDecoder(byte[] audioData) {
+        return new FLACDecoder(audioData);
+    }
+
+    public AudioProcessor createAudioProcessor(byte[] audioData) {
+        return new FLACAudioProcessor(audioData);
+    }
+
+    // Method for getting the format of audio the factory supports
+    public MediaFormat supportsFormat() {
+        return MediaFormat.FLAC;
+    }
+}
+
+package com.assignment.question;
+
+import com.assignment.question.decoder.AudioDecoder;
+import com.assignment.question.decoder.MP3Decoder;
+import com.assignment.question.player.AudioPlayer;
+import com.assignment.question.player.MP3Player;
+import com.assignment.question.processor.AudioProcessor;
+import com.assignment.question.processor.MP3AudioProcessor;
+
+// Concrete factory class for creating MP3 audio systems
+public class MP3AudioFactory extends AudioFactory {
+    // Method for getting the format of audio the factory supports
+    public MediaFormat supportsFormat() {
+        return MediaFormat.MP3;
+    }
+
+    // Methods for creating different parts of an MP3 audio system
+    public AudioPlayer createAudioPlayer(int volume, double playbackRate) {
+        return new MP3Player(volume, playbackRate);
+    }
+
+    public AudioDecoder createAudioDecoder(byte[] audioData) {
+        return new MP3Decoder(audioData);
+    }
+
+    public AudioProcessor createAudioProcessor(byte[] audioData) {
+        return new MP3AudioProcessor(audioData);
+    }
+}
