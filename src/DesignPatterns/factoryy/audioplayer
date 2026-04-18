@@ -1,0 +1,207 @@
+//==> Task 1 - Creating Audio Player Classes (Product Hierarchy)
+// Alredy given
+
+
+//==> Task 2 - Implementing the Simple Factory========================
+
+=====================================================================
+1. Implement the AudioPlayer class as a common parent class
+for all audio players. Include attributes and methods
+that are common to all audio players.
+=====================================================================
+
+ // as abstract taken from all payers as described
+
++ play
++ pause
++ stop
+
+ // declare following fields as described in details from players
+ // for making it reusable we will pass them from players in superclass
+
+- volume
+- playBackRate
+
+// copy following methods as described in details from players
+// for making them reusable, they will be available after extending the class
+
++ setVolume
++ getVolume
++ getPlayBackRate
+
+AudioPlayer.java--------------------------------------------------
+------------------------------------------------------------------
+
+package com.assignment.question;
+
+public abstract class AudioPlayer {
+
+
+    private int volume;
+    private double playBackRate;
+
+    public AudioPlayer(int volume, double playBackRate){
+        this.volume = volume;
+        this.playBackRate = playBackRate;
+    }
+
+    public void setVolume(int volume) {
+        if (volume >= 0 && volume <= 100) {
+            this.volume = volume;
+            System.out.println("Volume set to " + volume);
+        } else {
+            System.out.println("Invalid volume level");
+        }
+    }
+
+    public int getVolume() {
+        return this.volume;
+    }
+
+    public double getPlayBackRate() {
+        return playBackRate;
+    }
+
+    public abstract MediaFormat supportsType();
+    public abstract void play();
+    public abstract void pause();
+    public abstract void stop();
+}
+
+=====================================================================
+2. Implement the AudioPlayerFactory class that implements
+the Simple Factory pattern. Add a method to create audio player
+objects based on the audio format and relevant arguments.
+We will just return all object to centrilize object creation
+=====================================================================
+
+AudioPlayerFactory--------------------------------------------------
+--------------------------------------------------------------------
+
+package com.assignment.question;
+
+public class AudioPlayerFactory {
+    public static AudioPlayer getPlayer( MediaFormat format, int volume, double playBackRate){
+        switch(format){
+            case MP3 : return new MP3Player(volume, playBackRate);
+            case FLAC : return new FLACPlayer(volume, playBackRate);
+            case WAV : return new WAVPlayer(volume,  playBackRate);
+        }
+        return null;
+    }
+
+}
+
+
+=====================================================================
+ Optimization: Eliminate redundancy by excluding duplicate
+ methods -> (setVolume, getVolume, getPlayBackRate) and
+ removing the declaration and assignment of
+ fields -> (volume, playBackRate) from the constructor in all player classes.
+ Instead, pass these parameters to the abstract methods using the super constructor,
+ while retaining the abstracted methods play, pause, and stop.
+=====================================================================
+
+MP3Player---------------------------------------------------------
+------------------------------------------------------------------
+
+package com.assignment.question;
+
+public class MP3Player extends AudioPlayer {
+
+    public MP3Player(int volume, double playBackRate) {
+        super(volume, playBackRate);
+    }
+
+    public void play() {
+        // Simulate playing audio in FLAC format
+        // Each media format will have its own implementation
+        System.out.println("Playing MP3 audio");
+    }
+
+    public void pause() {
+        // Simulate pausing audio in FLAC format
+        // Each media format will have its own implementation
+        System.out.println("Pausing MP3 audio");
+    }
+
+    public void stop() {
+        // Simulate stopping audio in FLAC format
+        // Each media format will have its own implementation
+        System.out.println("Stopping MP3 audio");
+    }
+
+    public MediaFormat supportsType() {
+        return MediaFormat.MP3;
+    }
+}
+
+
+WAVPlayer---------------------------------------------------------
+------------------------------------------------------------------
+
+package com.assignment.question;
+
+public class WAVPlayer extends AudioPlayer {
+
+    public WAVPlayer(int volume, double playBackRate) {
+        super(volume, playBackRate);
+    }
+
+    public void play() {
+        // Simulate playing audio in WAV format
+        // Each media format will have its own implementation
+        System.out.println("Playing WAV audio");
+    }
+
+    public void pause() {
+        // Simulate pausing audio in WAV format
+        // Each media format will have its own implementation
+        System.out.println("Pausing WAV audio");
+    }
+
+    public void stop() {
+        // Simulate stopping audio in WAV format
+        // Each media format will have its own implementation
+        System.out.println("Stopping WAV audio");
+    }
+
+    public MediaFormat supportsType() {
+        return MediaFormat.WAV;
+    }
+}
+
+
+FLACPlayer---------------------------------------------------------
+------------------------------------------------------------------
+
+package com.assignment.question;
+
+public class FLACPlayer extends AudioPlayer {
+
+    public FLACPlayer(int volume, double playBackRate) {
+        super(volume, playBackRate);
+    }
+
+    public void play() {
+        // Simulate playing audio in FLAC format
+        // Each media format will have its own implementation
+        System.out.println("Playing FLAC audio");
+    }
+
+    public void pause() {
+        // Simulate pausing audio in FLAC format
+        // Each media format will have its own implementation
+        System.out.println("Pausing FLAC audio");
+    }
+
+    public void stop() {
+        // Simulate stopping audio in FLAC format
+        // Each media format will have its own implementation
+        System.out.println("Stopping FLAC audio");
+    }
+
+    public MediaFormat supportsType() {
+        return MediaFormat.FLAC;
+    }
+}

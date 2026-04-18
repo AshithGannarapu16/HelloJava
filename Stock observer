@@ -1,0 +1,152 @@
+// Clean Observer pattern implementation with minimal modifications to the original code
+
+// Step 1
+
+package com.assignment.question;
+
+public interface Observer {
+public void update(String stockName, double currentPrice);
+}
+-----------------------------------------------------------------
+
+// Step 2
+
+package com.assignment.question.services;
+
+import com.assignment.question.Observer;
+import com.assignment.question.utils.NotificationUtils;
+
+public class AppService implements Observer {
+public void sendPush(String stockName, double currentPrice) {
+String subject = "Price update for " + stockName;
+String message = "New price is " + currentPrice;
+NotificationUtils.sendPush(subject, message);
+}
+
+@Override
+public void update(String stockName, double currentPrice) {
+sendPush(stockName, currentPrice);
+}
+}
+--------------------------------
+package com.assignment.question.services;
+
+import com.assignment.question.Observer;
+import com.assignment.question.utils.NotificationUtils;
+
+public class EmailService implements Observer {
+public void sendEmail(String stockName, double currentPrice) {
+String subject = "Price update for " + stockName;
+String message = "New price is " + currentPrice;
+NotificationUtils.sendEmail(subject, message);
+}
+
+@Override
+public void update(String stockName, double currentPrice) {
+sendEmail(stockName, currentPrice);
+}
+}
+--------------------------------
+package com.assignment.question.services;
+
+import com.assignment.question.Observer;
+import com.assignment.question.utils.NotificationUtils;
+
+public class SmsService implements Observer {
+public void sendSMS(String stockName, double currentPrice) {
+String subject = "Price update for " + stockName;
+String message = "New price is " + currentPrice;
+NotificationUtils.sendSms(subject, message);
+}
+
+@Override
+public void update(String stockName, double currentPrice) {
+sendSMS(stockName, currentPrice);
+}
+}
+-----------------------------------------------------------------
+
+// Step 3
+
+package com.assignment.question;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Publisher implements ObserverRegistry {
+private List<Observer> observers = new ArrayList<>();
+
+@Override
+public void addObserver(Observer observer) {
+observers.add(observer);
+}
+
+@Override
+public void notifyObservers(String stockName, double currentPrice) {
+for(Observer observer : observers) {
+observer.update(stockName, currentPrice);
+}
+}
+
+@Override
+public void removeObserver(Observer observer) {
+observers.remove(observer);
+}
+
+}
+-----------------------------------------------------------------
+
+// Step 4
+
+package com.assignment.question;
+
+public class StockTradingManager extends Publisher {
+
+private String stockName;
+private double currentPrice;
+private double notificationThreshold;
+
+// DO NOT MODIFY THIS CONSTRUCTOR
+public StockTradingManager(String stockName, double initialPrice, double notificationThreshold) {
+this.stockName = stockName;
+this.currentPrice = initialPrice;
+this.notificationThreshold = notificationThreshold;
+}
+// DO NOT MODIFY THIS CONSTRUCTOR
+public void updateStockPrice(double newPrice) {
+currentPrice = newPrice;
+if (currentPrice > notificationThreshold) {
+super.notifyObservers(stockName, newPrice);
+}
+}
+
+}
+-----------------------------------------------------------------
+
+// Rest of the code remains the same
+
+package com.assignment.question;
+
+public interface ObserverRegistry {
+void addObserver(Observer observer);
+
+void removeObserver(Observer observer);
+
+void notifyObservers(String stockName, double currentPrice);
+}
+--------------------------------
+package com.assignment.question.utils;
+
+public class NotificationUtils {
+public static void sendEmail(String subject, String content) {
+
+}
+
+public static void sendSms(String subject, String content) {
+
+}
+
+public static void sendPush(String subject, String content) {
+
+}
+}
